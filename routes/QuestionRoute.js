@@ -1,39 +1,27 @@
 const route = require('express').Router()
 const Question = require('../models/Question')
 
-const {allQuestion} = require('../controllers/QuestionController')
 
+const {allQuestion,
+    createQuestion, 
+    singleQuestion,
+    upVote,
+    downVote,
+    searchQuestion
+} = require('../controllers/QuestionController')
 
-// All Question
-route.get('/',(req, res, next) => {
-    Question.find()
-        .then(question =>{
-            res.status(200).json({
-                question
-            })
-        })
-        .catch(error=>{
-            console.log(error)
-            res.status(500).json({
-               message: "Server Error"
-            })
-        })
-}) 
-
-// get single question
-route.get('/',(req, res, next) => {
-    
-}) 
-
-// search question by catagory
-route.get('/',(req, res, next) => {
-    
-}) 
+const AnswerRoute = require('../routes/AnswerRoute')
 
 // create question
-route.get('/',(req, res, next) => {
-    
-}) 
+route.post('/createQuestion', createQuestion) 
+// All Question
+route.get('/', allQuestion) 
+
+// get single question
+route.get('/:id', singleQuestion) 
+
+// search question by catagory
+route.get('/',searchQuestion) 
 
 // edit Question 
 route.get('/',(req, res, next) => {
@@ -41,16 +29,15 @@ route.get('/',(req, res, next) => {
 }) 
 
 // Delete Question 
-route.get('/',(req, res, next) => {
-    
-}) 
+route.patch('/:id/upvote', upVote) 
 
 // Up Vote Question 
-route.get('/',(req, res, next) => {
-    
-}) 
+route.patch('/:id/downvote', downVote) 
 
 // Down Vote Question 
+
+
+route.use('/', AnswerRoute)
 
 
 module.exports = route

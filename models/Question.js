@@ -29,9 +29,10 @@ const QuestionSchema = new Schema({
         required: true,
         trim:true
     },
-    answer: [
+    answers: [
         {
-            type: String
+            type: Schema.Types.ObjectId,
+            ref: 'Answer'
         }
     ]
 
